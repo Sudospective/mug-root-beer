@@ -37,33 +37,35 @@ This is a document to highlight the anatomy of a NotITG modfile and the inner wo
 
 Once you set up your chart for normal play, you have a few steps before you can fully initialize a modfile environment. Here is an example of a very basic modfile template you can customize further on your own.
 
+(If images will not load for you, you can view the repo of this template [here](https://github.com/Sudospective/mug-root-beer).)
+
 1.	Create a folder called `lua` in your stepfile's root directory.
-![mug root beer](https://cdn.discordapp.com/attachments/945097632185995334/945097725425365062/unknown.png)
+![https://github.com/Sudospective/mug-root-beer](https://cdn.discordapp.com/attachments/945097632185995334/945097725425365062/unknown.png)
 2.	Create a file in `lua` called `default.xml`.
-![mug root beer](https://cdn.discordapp.com/attachments/945097632185995334/945097988911530014/unknown.png)
+![https://github.com/Sudospective/mug-root-beer](https://cdn.discordapp.com/attachments/945097632185995334/945097988911530014/unknown.png)
 3. Open `default.xml` in your code editor and create an `ActorFrame`.
-![mug root beer](https://cdn.discordapp.com/attachments/945097632185995334/945098620015886366/unknown.png)
+![https://github.com/Sudospective/mug-root-beer](https://cdn.discordapp.com/attachments/945097632185995334/945098620015886366/unknown.png)
 4. Add an `OnCommand` to  the `ActorFrame`.
-![mug root beer](https://cdn.discordapp.com/attachments/945097632185995334/945099646009741403/unknown.png)
+![https://github.com/Sudospective/mug-root-beer](https://cdn.discordapp.com/attachments/945097632185995334/945099646009741403/unknown.png)
 5. Add a `StartCommand` and an `UpdateCommand`, create a `queuecommand` for `'Start'` in `OnCommand`, and set `'Update'` as a `luaeffect` in `StartCommand`.
-![mug root beer](https://cdn.discordapp.com/attachments/945097632185995334/945105118985084968/unknown.png)
+![https://github.com/Sudospective/mug-root-beer](https://cdn.discordapp.com/attachments/945097632185995334/945105118985084968/unknown.png)
 6. Add `children` to the `ActorFrame` that contains an `Actor` that will sleep permanently to prevent our FG code from being cleared immediately.
-![mug root beer](https://cdn.discordapp.com/attachments/945097632185995334/945105366813904946/unknown.png)
+![https://github.com/Sudospective/mug-root-beer](https://cdn.discordapp.com/attachments/945097632185995334/945105366813904946/unknown.png)
 7. Create a new function that will track the mods we change.
-![mug root beer](https://cdn.discordapp.com/attachments/945097632185995334/945105620669972490/unknown.png)
+![https://github.com/Sudospective/mug-root-beer](https://cdn.discordapp.com/attachments/945097632185995334/945105620669972490/unknown.png)
 8. Create a for loop in `UpdateCommand` that will update and apply modifiers at the correct beat.
-![mug root beer](https://cdn.discordapp.com/attachments/945097632185995334/945108470187835402/unknown.png)
+![https://github.com/Sudospective/mug-root-beer](https://cdn.discordapp.com/attachments/945097632185995334/945108470187835402/unknown.png)
 9. Edit the file's `SM` to include your `XML` via `#FGCHANGES`.
-![mug root beer](https://cdn.discordapp.com/attachments/945097632185995334/945108776372043786/unknown.png)
+![https://github.com/Sudospective/mug-root-beer](https://cdn.discordapp.com/attachments/945097632185995334/945108776372043786/unknown.png)
 10. Test for any Lua errors, reading the message to find what line of what file is causing the issue (In this case, no issues so far).
-![mug root beer](https://cdn.discordapp.com/attachments/945097632185995334/945109613479604295/unknown.png)
+![https://github.com/Sudospective/mug-root-beer](https://cdn.discordapp.com/attachments/945097632185995334/945109613479604295/unknown.png)
 11. Insert a mod using our custom mod function.
-![mug root beer](https://cdn.discordapp.com/attachments/945097632185995334/945109906913099806/unknown.png)
+![https://github.com/Sudospective/mug-root-beer](https://cdn.discordapp.com/attachments/945097632185995334/945109906913099806/unknown.png)
 12. Test for further issues (In this case, we used `mods` for a variable when we wanted `mod`).
-![mug root beer](https://cdn.discordapp.com/attachments/945097632185995334/945110180163616788/unknown.png)
+![https://github.com/Sudospective/mug-root-beer](https://cdn.discordapp.com/attachments/945097632185995334/945110180163616788/unknown.png)
 13. Make adjustments to code accordingly (Repeat these steps until no errors are shown).
-![mug root beer](https://cdn.discordapp.com/attachments/945097632185995334/945112654576488548/unknown.png)
+![https://github.com/Sudospective/mug-root-beer](https://cdn.discordapp.com/attachments/945097632185995334/945112654576488548/unknown.png)
 14. MARVEL AT YOUR INFINITE POWER
-![mug root beer](https://cdn.discordapp.com/attachments/945097632185995334/945112894964641822/unknown.png)
+![https://github.com/Sudospective/mug-root-beer](https://cdn.discordapp.com/attachments/945097632185995334/945112894964641822/unknown.png)
 
 From there, you can build upon this to include lots more features. Mod easing? Actor manipulation? Mod shortcuts? Actor creation using Lua instead of XML? It's all up to you!
