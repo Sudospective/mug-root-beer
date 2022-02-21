@@ -1,0 +1,89 @@
+<ActorFrame
+	OnCommand = "%function(self)
+		-- To minimize the amount of globals we have, we'll put them all in one global table.
+		mug = {}
+		-- Now we make sure our update loop starts running.
+		-- Notice how we called self? Where did we get that from? :thinking:
+		self:queuecommand('Start')
+	end"
+	StartCommand = "%function(self)
+		-- Having an extra command between On and Update allows us to fill variables only once.
+		-- Some things may not be available after OnCommmand, and we don't want to update
+		-- our constants every frame. Here is where we assign those constants.
+		mug.sw = SCREEN_WIDTH
+		mug.sh = SCREEN_HEIGHT
+		mug.scx = SCREEN_CENTER_X
+		mug.scy = SCREEN_CENTER_Y
+		mug.P1 = SCREENMAN:GetTopScreen():GetChild('PlayerP1')
+		mug.P2 = SCREENMAN:GetTopScreen():GetChild('PlayerP2')
+		-- Extra credit: let's make a loop-friendly version of P1 and P2.
+		-- Why would this help us in for loops? Why would it NOT help us if we
+		-- switch the order of the items in the table?
+		mug.P = {P1, P2}
+
+		-- Empty mods table
+		mug.mods = {}
+		-- A very simple mod function. Uses a modstring, and therefore, approach rate.
+		-- We will implicitly allow pn to be nil later.
+		function mug.mod(beat, modstring, pn)
+			table.insert(mug.mods, {beat, modstring, pn})
+		end
+
+
+		mug.mod(0, '100 invert')
+
+		
+		self:luaeffect('Update')
+
+	end"
+	UpdateCommand = "%function(self)
+
+		-- This will run every frame, and where we will update necessary information.
+		mug.beat = GAMESTATE:GetSongBeat()
+		mug.time = GAMESTATE:GetSongTime()
+
+		-- Apply modifiers in our mods table at the right beat
+		for index, mod in ipairs(mug.mods) do
+			-- First, check if mod still exists (you'll see why soon).
+			if mod then
+				-- You won't necessarily do this, but to make this easier to read,
+				-- let's define some variables.
+				local start = mod[1]
+				local modstring = mod[2]
+				local plr = mod[3]
+				-- Now check if we are at OR PAST the starting beat.
+				if mug.beat >= start then
+					print(mug.beat, start)
+					-- Use our modstring to apply modifiers to the players.
+					-- Sometimes, we won't have plr. That's okay. We will check
+					-- if we do first.
+					if plr then
+						-- Apply to a specific player.
+						GAMESTATE:ApplyModifiers(modstring, plr)
+					else
+						print(#mug.P)
+						-- Apply to every player.
+						for pn = 1, 2 do -- the mug.P thing has a bug in it im sorry .n.
+							GAMESTATE:ApplyModifiers(modstring, pn)
+						end
+					end
+					-- We don't want this to run twice for the same mod in the table.
+					-- So we should erase that mod if we're done with it.
+					mod = nil
+					table.remove(mug.mods, index)
+				end
+			end
+
+		end
+
+	end"
+>
+<children>
+	<Actor
+		InitCommand = "%function(self)
+			-- a very big number
+			self:sleep(9e9)
+		end"
+	/>
+</children>
+</ActorFrame>
